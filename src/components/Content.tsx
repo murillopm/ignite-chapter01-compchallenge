@@ -1,3 +1,6 @@
+import { memo } from "react";
+import { isEqual } from 'lodash'
+
 import { MovieCard } from "./MovieCard"
 
 import '../styles/content.scss';
@@ -23,8 +26,7 @@ interface ContentProps {
   selectedGenre: Genre;
 }
 
-export function Content(props: ContentProps) {
-  // Complete aqui
+function ContentComponent(props: ContentProps) {
   return (
     <div className="container">
       <header>
@@ -47,3 +49,8 @@ export function Content(props: ContentProps) {
     </div>
   )
 }
+
+export const Content = memo(ContentComponent, (prevProps, nextProps) => {
+  return prevProps.selectedGenre === nextProps.selectedGenre &&
+    isEqual(prevProps.movies, nextProps.movies)
+})

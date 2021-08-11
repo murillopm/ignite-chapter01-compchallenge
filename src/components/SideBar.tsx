@@ -1,3 +1,6 @@
+import { memo } from "react";
+import { isEqual } from 'lodash'
+
 import { Button } from "./Button"
 
 import '../styles/sidebar.scss';
@@ -13,8 +16,7 @@ interface SideBarProps {
   handleGenreChanged: (genreId: number) => void;
 }
 
-export function SideBar(props: SideBarProps) {
-  // Complete aqui
+function SideBarComponent(props: SideBarProps) {
   return (
     <nav className="sidebar">
       <span>Watch<p>Me</p></span>
@@ -33,3 +35,8 @@ export function SideBar(props: SideBarProps) {
     </nav>
   )
 }
+
+export const SideBar = memo(SideBarComponent, (prevProps, nextProps) => {
+  return (prevProps.selectedGenreId === nextProps.selectedGenreId) &&
+    isEqual(prevProps.genres, nextProps.genres)
+})
